@@ -10,6 +10,7 @@ public:
     BinaryNode* izquierda;
     int frecuencia;
     char bandera;
+    int hijo;
 
 BinaryNode(int frecuencia, char bandera){
 //desreferencio e inicializo null en izq, der
@@ -41,6 +42,7 @@ void InsertarMinHeap(vector<BinaryNode*>* heap, BinaryNode* nodo){
     heap->push_back(nodo);
 
     int padre = 0;
+    int hijo = 0;
 
     //mientras el hijo sea distinto de 0
     while(heap->size() - 1 != 0){
@@ -61,7 +63,7 @@ void InsertarMinHeap(vector<BinaryNode*>* heap, BinaryNode* nodo){
 //Crear nuevo nodo interno con la frecuencia igual a la suma de la frecuencia de dos nodos. A los dos nodos extraidos
 //se hace que sea hijo->izq e hijo->der y agrega este nodo al min heap, el $ no se usa es un caracter especial para nodo interno
 void AgregarNodoInterno(vector<BinaryNode*>* heap, BinaryNode* derecha, BinaryNode* izquierda){
-    BinaryNode* NodoInter = new BinaryNode('$'izquierda->frecuencia + derecha->frecuencia);
+    BinaryNode* NodoInter = new BinaryNode('$',izquierda->frecuencia + derecha->frecuencia);
     NodoInter->derecha = derecha;
     NodoInter->izquierda = izquierda;
 
@@ -91,12 +93,42 @@ void Heapify(vector<BinaryNode*>* heap){
 }
 
 BinaryNode* ExtraerDeTop (vector<BinaryNode*>* heap){
-//ACAAAAAAAA VOOOOOYYYYYYYYYYY
+    BinaryNode* nodo = (*heap)[0];
+    (*heap)[0] = (*heap)[heap->end() - 1];
+    Heapify(heap);
+    return nodo;
 
 }
-map<char,string> getHuffman(vector<char> characters, vector<int> frequencies)
-{
+
+void Backtrack(map<char, string>* respuesta, BinaryNode* raiz, string code){
+    if(!raiz)
+        return;
+    if(raiz->bandera != '$')
+        (*respuesta)[raiz->bandera] = code;
+
+    Backtrack(respuesta, raiz->derecha, code + "1");
+    Backtrack(respuesta, raiz->izquierda, code + "0");
+}
+
+map<char,string> getHuffman(vector<char> characters, vector<int> frequencies){
+    vector<BinaryNode*> nodos,;
+    vector<BinaryNode*> minHeap;
+    for(int i = 0; i < characters.size(); i++){
+    nodos.push_back(new BinaryNode(characters[i], frequencies[i]));
+  }
+
+  for(int i = 0; i < nodos.size(); i++){
+    InsertarMinHeap(&minHeap, nodos[i]);
+}
+
+while(minHeap.size() > 1){
+    BinaryNode* right = ExtraerDeTop(&minHeap);
+    BinaryNode* left = ExtraerDeTop(&minHeap);
+    AgregarNodoInterno(&minHeap, left, right);
+  }
+
   map<char,string> answer;
+  Backtrack(&answer, minHeap[0], "");
   return answer;
 }
 

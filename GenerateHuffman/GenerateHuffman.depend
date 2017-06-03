@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1495733192 source:c:\users\sully mancia\documents\clases\analisisdealgoritmos\segundoparcial\tarea4_algoritmos\generatehuffman\test.cpp
+	"Test.h"
+
+1495733192 c:\users\sully mancia\documents\clases\analisisdealgoritmos\segundoparcial\tarea4_algoritmos\generatehuffman\test.h
+	<iostream>
+	<vector>
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<map>
+	<queue>
+	<list>
+
